@@ -11,7 +11,7 @@ class TodoList extends React.Component {
 
   addItem = e => {
     if (this._inputElement.value !== "") {
-      var newItem = {
+      let newItem = {
         text: this._inputElement.value,
         key: Date.now()
       }
@@ -24,8 +24,17 @@ class TodoList extends React.Component {
      
       this._inputElement.value = ""
     }
-    console.log(this.state.items)
     e.preventDefault()
+  }
+
+  deleteItem = key => {
+    let filteredItems = this.state.items.filter(function (item) {
+      return (item.key !== key)
+    })
+   
+    this.setState({
+      items: filteredItems
+    })
   }
 
   render() {
@@ -39,7 +48,7 @@ class TodoList extends React.Component {
             <button type="submit">add</button>
           </form>
         </div>
-        <TodoItems entries={this.state.items}/>
+        <TodoItems entries={this.state.items} delete={this.deleteItem}/>
       </div>
     )
   }
